@@ -13,7 +13,7 @@
 
 
 <script>
-import store from '../store'
+import store from '../store';
 
 export default {
   name: 'Login',
@@ -22,7 +22,7 @@ export default {
       isError: false,
       email: '',
       password: '',
-    }
+    };
   },
   methods: {
     login() {
@@ -31,6 +31,7 @@ export default {
         password: this.password
       }).then(res => {
         const token = res.data.access_token;
+        this.$cookies.set('TOKEN', token);
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         store.state.isLogin = true;
         this.$router.push({path: '/'});
@@ -40,7 +41,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 
 

@@ -9,8 +9,8 @@
 
 
 <script>
-import Navbar from './Navbar.vue'
-import Table from './Table.vue'
+import Navbar from './Navbar.vue';
+import Table from './Table.vue';
 
 export default {
   name: 'Table',
@@ -18,7 +18,7 @@ export default {
     'main-navbar': Navbar,
     'main-table': Table
   }
-}
+};
 </script>
 
 
