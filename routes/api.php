@@ -11,6 +11,10 @@
 |
 */
 
-Route::group(['middleware' => 'api'], function() {
-    Route::get('books/{user_id}', 'BookController@index');
+Route::post('/login', 'AuthController@login');
+
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::get('/books/{user_id}', 'BookController@index');
+    Route::get('/me', 'AuthController@me');
+    Route::post('/logout', 'AuthController@logout');
 });
