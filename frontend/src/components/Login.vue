@@ -30,10 +30,17 @@ export default {
         email: this.email,
         password: this.password
       }).then(res => {
+        const user_id = res.data.user_id;
         const token = res.data.access_token;
-        this.$cookies.set('TOKEN', token);
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        store.state.isLogin = true;
+        store.commit('LOGIN', {
+          user_id: user_id,
+          token: token
+        });
+
+        console.log(store.state.userId);
+        console.log(store.state.token);
+
         this.$router.push({path: '/'});
       // eslint-disable-next-line
       }).catch(error => {

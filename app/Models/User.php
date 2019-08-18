@@ -47,4 +47,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    // ユーザーが登録した本を全て返す
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
 }
