@@ -5,12 +5,14 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 import initialState from './initialState';
+import VModal from 'vue-js-modal';
 
 window.state = store.state;
 
 Vue.prototype.$axios = axios;
 
 Vue.use(Vuex);
+Vue.use(VModal);
 
 Vue.config.productionTip = false;
 

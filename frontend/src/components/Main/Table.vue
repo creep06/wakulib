@@ -1,6 +1,7 @@
 <template>
 <div>
   <h1>Table</h1>
+
   <table>
     <thead>
       <tr>
@@ -19,6 +20,13 @@
       </tr>
     </tbody>
   </table>
+
+  <button @click="openNewBook">本追加</button>
+
+  <modal name="new-book" width="80%" height="80%"
+         :delay=100 transition="nice-modal-fade">
+    <new-book @close="closeNewBook"/>
+  </modal>
 </div>
 </template>
 
@@ -26,9 +34,13 @@
 
 <script>
 import store from '../../store';
+import NewBook from './NewBook.vue';
 
 export default {
   name: 'Table',
+  components: {
+    'new-book': NewBook
+  },
   data: function() {
     return {
       books: []
@@ -45,7 +57,7 @@ export default {
             'phonetic': book.phonetic,
             'author': book.author,
             'volume': book.volume,
-            'chapter': book.chapeter,
+            'chapter': book.chapter,
             'completed': book.completed
           });
         });
@@ -53,6 +65,12 @@ export default {
       }).catch(error => {
         //
       });
+    },
+    openNewBook() {
+      this.$modal.show('new-book');
+    },
+    closeNewBook() {
+      this.$modal.hide('new-book');
     }
   },
   mounted() {
@@ -64,4 +82,7 @@ export default {
 
 
 <style scoped>
+/deep/ .v--modal {
+  background-color: #111111;
+}
 </style>
