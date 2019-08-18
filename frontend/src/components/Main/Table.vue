@@ -25,7 +25,7 @@
 
   <modal name="new-book" width="80%" height="80%"
          :delay=100 transition="nice-modal-fade">
-    <new-book @close="closeNewBook"/>
+    <new-book @close="closeNewBook" @new="getNewBook"/>
   </modal>
 </div>
 </template>
@@ -71,6 +71,9 @@ export default {
     },
     closeNewBook() {
       this.$modal.hide('new-book');
+    },
+    getNewBook(book) {
+      this.books.push(book);
     }
   },
   mounted() {

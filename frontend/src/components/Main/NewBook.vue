@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     makeBook() {
-      this.$axios.post('/api/books', {
+      const book = {
         user_id: store.state.userId,
         title: this.title,
         phonetic: this.phonetic,
@@ -46,12 +46,15 @@ export default {
         volume: this.volume,
         chapter: this.chapter,
         completed: this.completed
-      }).then(res => {
-        console.log("New book successfully created");
+      };
+      this.$axios.post('/api/books', book).then(res => {
+        delete book['user_id'];
+        book['id'] = res.data.id;
+        this.$emit('new', book);
+        this.$emit('close');
       }).catch(error => {
         //
       });
-      this.$emit('close');
     }
   }
 };
