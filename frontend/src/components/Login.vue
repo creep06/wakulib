@@ -37,10 +37,6 @@ export default {
           user_id: user_id,
           token: token
         });
-
-        console.log(store.state.userId);
-        console.log(store.state.token);
-
         this.$router.push({path: '/'});
       // eslint-disable-next-line
       }).catch(error => {

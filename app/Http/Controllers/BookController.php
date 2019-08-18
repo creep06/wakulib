@@ -23,7 +23,7 @@ class BookController extends Controller
         $book->author = $req->author;
         $book->volume = $req->volume;
         $book->chapter = $req->chapter;
-        $book->completed = $req->completed;
+        $book->status = $req->status;
         $book->user_id = $req->user_id;
         $book->save();
         return $book;
@@ -37,7 +37,7 @@ class BookController extends Controller
         $book->author = $req->author;
         $book->volume = $req->volume;
         $book->chapter = $req->chapter;
-        $book->completed = $req->completed;
+        $book->status = $req->status;
         $book->user_id = $req->user_id;
         $book->save();
         return $book;

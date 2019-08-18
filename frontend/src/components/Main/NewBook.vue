@@ -12,8 +12,8 @@
     <input type="number" id="volume" v-model="volume">
     <label for="chapter">話数</label>
     <input type="number" id="chapter" v-model="chapter">
-    <label for="completed">完結</label>
-    <input type="checkbox" id="completed" v-model="completed">
+    <label for="status">状態</label>
+    <input type="text" id="status" v-model="status">
     <button type="submit">作成</button>
   </form>
 </div>
@@ -33,7 +33,7 @@ export default {
       author: '',
       volume: 1,
       chapter: 1,
-      completed: false
+      status: 'active'
     };
   },
   methods: {
@@ -45,15 +45,13 @@ export default {
         author: this.author,
         volume: this.volume,
         chapter: this.chapter,
-        completed: this.completed
+        status: this.status
       };
       this.$axios.post('/api/books', book).then(res => {
-        delete book['user_id'];
-        book['id'] = res.data.id;
-        this.$emit('new', book);
+        this.$emit('new', res.data);
         this.$emit('close');
       }).catch(error => {
-        //
+        console.log(error);
       });
     }
   }
