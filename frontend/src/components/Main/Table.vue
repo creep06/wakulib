@@ -1,26 +1,26 @@
 <template>
-<div>
+<div class="content">
   <h1>Table</h1>
 
   <table>
     <thead>
       <tr>
-        <th>名前</th>
-        <th>著者</th>
-        <th>巻数</th>
-        <th>話数</th>
-        <th>状態</th>
-        <th>編集</th>
+        <th class="clm1">名前</th>
+        <th class="clm2">著者</th>
+        <th class="clm3">巻数</th>
+        <th class="clm4">話数</th>
+        <th class="clm5">状態</th>
+        <th class="clm6">編集</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="b in books" :key="b.id">
-        <th>{{ b.title }}</th>
-        <th>{{ b.author }}</th>
-        <th>{{ b.volume }}</th>
-        <th>{{ b.chapter }}</th>
-        <th>{{ b.status }}</th>
-        <th><button @click="openEditBook(b.id)">編集</button></th>
+        <td class="clm1">{{ b.title }}</td>
+        <td class="clm2">{{ b.author }}</td>
+        <td class="clm3">{{ b.volume }}</td>
+        <td class="clm4">{{ b.chapter }}</td>
+        <td class="clm5">{{ b.status }}</td>
+        <td class="clm6"><button @click="openEditBook(b.id)">編集</button></td>
       </tr>
     </tbody>
   </table>
@@ -125,8 +125,63 @@ export default {
 
 
 
-<style scoped>
-/deep/ .v--modal {
+<style lang="scss" scoped>
+.content {
+  width: 100%;
+  text-align: center;
+}
+
+table {
+  color: #d5d5d8;
+  width: 95%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  th {
+    height: 50px;
+    border-style: none solid;
+    border-width: 3px;
+    border-color: #26262F;
+    background-color: #2B2C34;
+    table-layout: fixed;
+  }
+  td {
+    @extend th;
+    height: 40px;
+  }
+  .clm1 {
+    border-style: none;
+    width: 100000px;
+  }
+  .clm2 {
+    width: 20%;
+  }
+  .clm3 {
+    width: 10%;
+  }
+  .clm4 {
+    width: 11%;
+  }
+  .clm5 {
+    width: 12%;
+  }
+  .clm6 {
+    border-style: none;
+    width: 17%;
+  }
+  tr:nth-child(odd) td {
+    background-color: #2E2F39;
+  }
+  thead {
+    display: block;
+  }
+  tbody {
+    display: block;
+    overflow-y: scroll;
+    height: 500px;
+  }
+}
+
+::v-deep .v--modal {
   background-color: #111111;
 }
 </style>

@@ -16,6 +16,8 @@ export default {
 
 <style lang="scss">
 body {
+  background-image: url("./assets/bg.png");
+
   background-color: #1F2224;
   color: #EEEEEE;
   margin: 0;
