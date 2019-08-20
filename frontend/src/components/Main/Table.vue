@@ -6,6 +6,10 @@
     <template slot="table-row" slot-scope="props">
       <button v-if="props.column.field == 'edit'"
         @click="openEditBook(props.row.id)">編集</button>
+      <div v-else-if="props.column.field == 'status'">
+        <figure class="circle" :class="props.row.status"/>
+          {{ props.row.status }}
+      </div>
       <span v-else>{{ props.formattedRow[props.column.field] }}</span>
     </template>
   </vue-good-table>
@@ -95,7 +99,7 @@ export default {
               'complete'
             ]
           },
-          width: '7%'
+          width: '12%'
         },
         {
           label: '更新',
@@ -103,7 +107,7 @@ export default {
           type: 'date',
           dateInputFormat: 'yyyy-MM-dd HH:mm:ss',
           dateOutputFormat: 'yy/MM/dd HH:mm',
-          width: '22%'
+          width: '17%'
         },
         {
           label: '編集',
@@ -158,10 +162,7 @@ export default {
       }).catch(error => {
         console.log(error);
       });
-    },
-    showme(it) {
-      console.log(it);
-    },
+    }
   },
   mounted() {
     this.init();
@@ -199,6 +200,23 @@ export default {
   }
   tr:nth-child(odd) td {
     background-color: #2E2F3B;
+  }
+}
+
+.circle {
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  margin: 0;
+  &.active {
+    background: radial-gradient(circle at 40% -35%,#deefef,#78f678 10%,#059405 50%,#064527 100%);
+  }
+  &.inactive {
+    background: radial-gradient(circle at 40% -25%, #efdeef, #f68881 10%, #940505 80%, #333333 100%);
+  }
+  &.complete {
+    background: radial-gradient(circle at 40% -25%, #81e8f6, #76deef 10%, #055194 80%, #062745 100%);
   }
 }
 

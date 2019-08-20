@@ -4,8 +4,8 @@
     <span>logo</span>
   </div>
   <div class="right">
-    <button @click="addBook">本追加</button>
-    <button @click="logout">ログアウト</button>
+    <a @click="addBook"><font-awesome-icon icon="plus" size="2x"/></a>
+    <a @click="logout"><font-awesome-icon icon="cog" size="2x"/></a>
   </div>
 </div>
 </template>
@@ -44,5 +44,11 @@ export default {
   height: 40px;
   padding: 12px;
   background-color: #282930;
+  .right {
+    vertical-align: middle;
+    a {
+      margin: auto 0 auto 12px;
+    }
+  }
 }
 </style>
