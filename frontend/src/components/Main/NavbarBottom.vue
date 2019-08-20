@@ -1,6 +1,6 @@
 <template>
-<div>
-  <h1>navbar_bottom</h1>
+<div class="navbar">
+  <span>navbar_bottom</span>
 </div>
 </template>
 
@@ -15,4 +15,13 @@ export default {
 
 
 <style scoped>
+.navbar {
+  height: 24px;
+  padding: 6px;
+  background-color: #282930;
+  text-align: center;
+  span {
+    font-size: 12px;
+  }
+}
 </style>

@@ -1,31 +1,14 @@
 <template>
 <div class="content">
-  <h1>Table</h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th class="clm1">名前</th>
-        <th class="clm2">著者</th>
-        <th class="clm3">巻数</th>
-        <th class="clm4">話数</th>
-        <th class="clm5">状態</th>
-        <th class="clm6">編集</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="b in books" :key="b.id">
-        <td class="clm1">{{ b.title }}</td>
-        <td class="clm2">{{ b.author }}</td>
-        <td class="clm3">{{ b.volume }}</td>
-        <td class="clm4">{{ b.chapter }}</td>
-        <td class="clm5">{{ b.status }}</td>
-        <td class="clm6"><button @click="openEditBook(b.id)">編集</button></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button @click="openNewBook">本追加</button>
+  <vue-good-table :columns="columns" :rows="books"
+    :fixed-header="true" max-height="calc(100vh - 100px)"
+    styleClass="main-table">
+    <template slot="table-row" slot-scope="props">
+      <button v-if="props.column.field == 'edit'"
+        @click="openEditBook(props.row.id)">編集</button>
+      <span v-else>{{ props.formattedRow[props.column.field] }}</span>
+    </template>
+  </vue-good-table>
 
   <modal name="new-book" width="80%" height="80%"
          :delay=100 transition="nice-modal-fade">
@@ -59,6 +42,7 @@
 <script>
 import store from '../../store';
 import NewBook from './NewBook.vue';
+import EventBus from './EventBus';
 
 export default {
   name: 'Table',
@@ -67,6 +51,66 @@ export default {
   },
   data: function() {
     return {
+      columns: [
+        {
+          label: '名前',
+          field: 'title',
+          filterOptions: {
+            enabled: true
+          },
+          width: '33%'
+        },
+        {
+          label: '作者',
+          field: 'author',
+          filterOptions: {
+            enabled: true
+          },
+          width: '22%'
+        },
+        {
+          label: '巻数',
+          field: 'volume',
+          filterOptions: {
+            enabled: true
+          },
+          width: '5%'
+        },
+        {
+          label: '話数',
+          field: 'chapter',
+          filterOptions: {
+            enabled: true
+          },
+          width: '5%'
+        },
+        {
+          label: '状態',
+          field: 'status',
+          filterOptions: {
+            enabled: true,
+            filterDropdownItems: [
+              'active',
+              'inactive',
+              'complete'
+            ]
+          },
+          width: '7%'
+        },
+        {
+          label: '更新',
+          field: 'updated_at',
+          type: 'date',
+          dateInputFormat: 'yyyy-MM-dd HH:mm:ss',
+          dateOutputFormat: 'yy/MM/dd HH:mm',
+          width: '22%'
+        },
+        {
+          label: '編集',
+          field: 'edit',
+          width: '5%'
+        }
+      ],
       books: [],
       // 編集予定の本のアドレス
       edit: {},
@@ -96,8 +140,6 @@ export default {
       this.edit = this.books.find(b => b.id === id);
       this.editTmp = JSON.parse(JSON.stringify(this.edit));
       this.$modal.show('edit-book');
-
-      console.log(this.editTmp);
     },
     closeEditBook() {
       this.$modal.hide('edit-book');
@@ -111,14 +153,21 @@ export default {
         this.edit.volume = res.data.volume;
         this.edit.chapter = res.data.chapter;
         this.edit.status = res.data.status;
+        this.edit.updated_at = res.data.updated_at;
         this.closeEditBook();
       }).catch(error => {
         console.log(error);
       });
-    }
+    },
+    showme(it) {
+      console.log(it);
+    },
   },
   mounted() {
     this.init();
+    EventBus.$on('addBook', () => {
+      this.openNewBook();
+    });
   }
 };
 </script>
@@ -128,56 +177,28 @@ export default {
 <style lang="scss" scoped>
 .content {
   width: 100%;
-  text-align: center;
+  height: calc(100vh - 100px);
 }
 
-table {
+::v-deep table.main-table {
   color: #d5d5d8;
-  width: 95%;
   margin: 0 auto;
   border-collapse: collapse;
   th {
-    height: 50px;
     border-style: none solid;
     border-width: 3px;
     border-color: #26262F;
     background-color: #2B2C34;
-    table-layout: fixed;
+    padding: 12px;
+    &:nth-child(1), &:nth-last-child(1) {
+      border-style: none;
+    }
   }
   td {
     @extend th;
-    height: 40px;
-  }
-  .clm1 {
-    border-style: none;
-    width: 100000px;
-  }
-  .clm2 {
-    width: 20%;
-  }
-  .clm3 {
-    width: 10%;
-  }
-  .clm4 {
-    width: 11%;
-  }
-  .clm5 {
-    width: 12%;
-  }
-  .clm6 {
-    border-style: none;
-    width: 17%;
   }
   tr:nth-child(odd) td {
-    background-color: #2E2F39;
-  }
-  thead {
-    display: block;
-  }
-  tbody {
-    display: block;
-    overflow-y: scroll;
-    height: 500px;
+    background-color: #2E2F3B;
   }
 }
 

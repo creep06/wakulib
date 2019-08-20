@@ -1,6 +1,5 @@
 <template>
 <div>
-  <h1>メイン画面だ！</h1>
   <main-navbar />
   <main-table />
   <main-navbar-bottom />
