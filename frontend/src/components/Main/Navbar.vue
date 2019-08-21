@@ -4,8 +4,8 @@
     <span>logo</span>
   </div>
   <div class="right">
-    <a @click="addBook"><font-awesome-icon icon="plus" size="2x"/></a>
-    <a @click="logout"><font-awesome-icon icon="cog" size="2x"/></a>
+    <a @click="addBook" title="本の追加"><i class="fas fa-plus icon"></i></a>
+    <a @click="logout" title="設定"><i class="fas fa-cog icon"></i></a>
   </div>
 </div>
 </template>
@@ -44,10 +44,15 @@ export default {
   height: 40px;
   padding: 12px;
   background-color: #282930;
-  .right {
-    vertical-align: middle;
-    a {
-      margin: auto 0 auto 12px;
+  a {
+    cursor: pointer;
+    i.icon {
+      font-size: 40px;
+      margin-left: 12px;
+      transition: all 0.2s;
+      &:hover {
+        transform: scale(1.3);
+      }
     }
   }
 }

@@ -4,8 +4,10 @@
     :fixed-header="true" max-height="calc(100vh - 100px)"
     styleClass="main-table">
     <template slot="table-row" slot-scope="props">
-      <button v-if="props.column.field == 'edit'"
-        @click="openEditBook(props.row.id)">編集</button>
+      <a v-if="props.column.field == 'edit'"
+        @click="openEditBook(props.row.id)">
+        <i class="fas fa-pen icon"></i>
+      </a>
       <div v-else-if="props.column.field == 'status'">
         <figure class="circle" :class="props.row.status"/>
           {{ props.row.status }}
@@ -60,7 +62,8 @@ export default {
           label: '名前',
           field: 'title',
           filterOptions: {
-            enabled: true
+            enabled: true,
+            placeholder: 'Search...'
           },
           width: '33%'
         },
@@ -68,24 +71,19 @@ export default {
           label: '作者',
           field: 'author',
           filterOptions: {
-            enabled: true
+            enabled: true,
+            placeholder: 'Search...'
           },
           width: '22%'
         },
         {
           label: '巻数',
           field: 'volume',
-          filterOptions: {
-            enabled: true
-          },
           width: '5%'
         },
         {
           label: '話数',
           field: 'chapter',
-          filterOptions: {
-            enabled: true
-          },
           width: '5%'
         },
         {
@@ -93,6 +91,7 @@ export default {
           field: 'status',
           filterOptions: {
             enabled: true,
+            placeholder: 'Search...',
             filterDropdownItems: [
               'active',
               'inactive',
@@ -184,6 +183,7 @@ export default {
 ::v-deep table.main-table {
   color: #d5d5d8;
   margin: 0 auto;
+  width: 100%;
   border-collapse: collapse;
   th {
     border-style: none solid;
@@ -191,8 +191,14 @@ export default {
     border-color: #26262F;
     background-color: #2B2C34;
     padding: 12px;
+    &.filter-th {
+      padding-top: 0 !important;
+    }
     &:nth-child(1), &:nth-last-child(1) {
       border-style: none;
+    }
+    &.vgt-right-align {
+      text-align: left;
     }
   }
   td {
@@ -201,7 +207,26 @@ export default {
   tr:nth-child(odd) td {
     background-color: #2E2F3B;
   }
+  a {
+    cursor: pointer;
+    i.icon {
+      transition: all 0.2s;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+  .vgt-input, .vgt-select {
+    color: #7A7C84;
+    background-color: #3A3C44;
+    border: none;
+  }
+  .vgt-input::placeholder {
+    color: #7A7C84;
+    opacity: 1;
+  }
 }
+
 
 .circle {
   display: inline-block;
